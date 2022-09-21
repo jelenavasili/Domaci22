@@ -23,8 +23,8 @@ public class ReadFile {
 
     private static void writeExcel(String filename) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("test");
-        
+        XSSFSheet sheet = workbook.createSheet("Sheet1");
+
         for (int i = 0; i < 1; i++) {
             XSSFRow row = sheet.createRow(i);
             for (int j = 0; j < 1; j++) {
@@ -36,13 +36,22 @@ public class ReadFile {
                 cell.setCellValue("Vasilijevic");
             }
         }
-       // cell.setCellValue("Jelena");
+        for (int i = 1; i < 2; i++) {
+            XSSFRow row = sheet.createRow(i);
+            for (int j = 0; j < 1; j++) {
+                XSSFCell cell = row.createCell(j);
+                cell.setCellValue("Pera");
+            }
+            for (int j = 1; j < 2; j++) {
+                XSSFCell cell = row.createCell(j);
+                cell.setCellValue("Peric");
+            }
+        }
+        // cell.setCellValue("Jelena");
 
-            FileOutputStream fileOutputStream = new FileOutputStream(new File(filename));
-            workbook.write(fileOutputStream);
-            fileOutputStream.close();
-
-
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(filename));
+        workbook.write(fileOutputStream);
+        fileOutputStream.close();
     }
 
     public static void readExcel(String path) {
@@ -68,7 +77,4 @@ public class ReadFile {
             // e.printStackTrace();
         }
     }
-
-
-
 }
