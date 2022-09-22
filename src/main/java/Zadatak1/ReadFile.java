@@ -17,7 +17,7 @@ public class ReadFile {
         try {
             writeExcel("test.xlsx");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
     }
 
@@ -47,9 +47,7 @@ public class ReadFile {
                 cell.setCellValue("Peric");
             }
         }
-        // cell.setCellValue("Jelena");
-
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(filename));
+        FileOutputStream fileOutputStream = new FileOutputStream("test.xlsx");
         workbook.write(fileOutputStream);
         fileOutputStream.close();
     }
