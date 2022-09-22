@@ -1,5 +1,6 @@
 package Zadatak1;
 
+import com.github.javafaker.Faker;
 import com.sun.corba.se.impl.presentation.rmi.IDLTypeException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
@@ -19,8 +20,13 @@ public class ReadFile {
         } catch (FileNotFoundException e) {
             //throw new RuntimeException(e);
         }
-    }
 
+        Faker faker = new Faker();
+        try {
+            writeFaker(faker);
+        } catch (FileNotFoundException e) {
+        }
+    }
     private static void writeExcel(String filename) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Sheet1");
@@ -46,11 +52,35 @@ public class ReadFile {
                 XSSFCell cell = row.createCell(j);
                 cell.setCellValue("Peric");
             }
+
         }
         FileOutputStream fileOutputStream = new FileOutputStream("test.xlsx");
         workbook.write(fileOutputStream);
         fileOutputStream.close();
     }
+
+    private static void writeFaker(Faker faker) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream("test.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+        XSSFSheet sheet = workbook.getSheet("Sheet1");
+
+        for (int i = 2; i < 10; i++) {
+            XSSFRow row = sheet.createRow(i);
+            for (int j = 0; j < 1; j++) {
+                XSSFCell cell = row.createCell(j);
+                cell.setCellValue(faker.name().firstName());
+            }
+            for (int j = 1; j < 2; j++) {
+                XSSFCell cell = row.createCell(j);
+                cell.setCellValue(faker.name().lastName());
+            }
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream("test.xlsx");
+        workbook.write(fileOutputStream);
+        fileOutputStream.close();
+    }
+
+
 
     public static void readExcel(String path) {
         try {
@@ -75,4 +105,5 @@ public class ReadFile {
             // e.printStackTrace();
         }
     }
+
 }
